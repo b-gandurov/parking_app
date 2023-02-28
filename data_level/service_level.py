@@ -63,14 +63,15 @@ class ParkingLotService(ParkinglotDatabase):
 
     def add_vehicle(self, vehicle: Vehicle):
         # if self.available_space(vehicle.vehicle_type):
-            details = (vehicle.plate_number, vehicle.entry_time, vehicle.vehicle_type, vehicle.discount_type)
-            self.add_to_parking(*details)
-        # else:
-        #     raise Exception('No available space')
+        details = (vehicle.plate_number, vehicle.entry_time, vehicle.vehicle_type, vehicle.discount_type)
+        self.add_to_parking(*details)
 
-    def remove_vehicle(self, plate_number,exit_time=None):
+    # else:
+    #     raise Exception('No available space')
+
+    def remove_vehicle(self, plate_number, exit_time=None):
         # details = (vehicle.plate_number, vehicle.)
-        self.remove_from_parking(plate_number,exit_time)
+        self.remove_from_parking(plate_number, exit_time)
 
     # def available_space(self, vehicle_type):
     #     check = self.db.available_space() - self.db.get_vehicle_size(vehicle_type)
@@ -84,8 +85,9 @@ class TimeService(TimeRangesDatabase):
     def __init__(self):
         super().__init__()
 
-    def get_vehicle_time(self,license_plate):
+    def get_vehicle_time(self, license_plate):
         return self.get_vehicle_start_end_time_in_datetime(license_plate)
+
 
 
 class DiscountService:
@@ -94,6 +96,12 @@ class DiscountService:
 
 class PaymentService:
     """This class will be responsible for calculating the amount owed for parking."""
+    def __init__(self):
+        pass
+
+    def get_amount_owed(self,license_plate):
+        pass
+
 
 
 class ExceptionHandling:

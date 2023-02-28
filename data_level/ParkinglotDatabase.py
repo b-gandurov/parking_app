@@ -16,7 +16,7 @@ class ParkinglotDatabase(DatabaseCon):
     # def available_space(self):
     #     return self.__available_space
     #
-    def available_space(self):
+    def get_available_space(self):
         result = self.cursor.execute("SELECT available_area FROM parking_lot_size").fetchone()[0]
         if result is not None:
             return result
@@ -62,7 +62,7 @@ class ParkinglotDatabase(DatabaseCon):
             "VALUES (?,?,?,?)",
             (license_plate, entry_time, vehicle_type, discount))
         parking_spot = self.get_vehicle_size(vehicle_type)
-        diff = self.available_space() - parking_spot
+        diff = self.get_available_space() - parking_spot
         if diff >= 0:
             self.cursor.execute(f'''UPDATE parking_lot_size SET available_area = {diff} WHERE id = 1''')
             self.db.commit()
@@ -81,7 +81,7 @@ class ParkinglotDatabase(DatabaseCon):
             "WHERE plate_number = ? AND exited_at IS NULL",
             (exit_time, license_plate))
         parking_spot = self.get_vehicle_size(license_plate)
-        diff = self.available_space() + parking_spot
+        diff = self.get_available_space() + parking_spot
         default = self.cursor.execute("SELECT starting_area FROM parking_lot_size").fetchone()[0]
         if diff <= default:
             self.cursor.execute(f'''UPDATE parking_lot_size SET available_area = {diff} WHERE id = 1''')

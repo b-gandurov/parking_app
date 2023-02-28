@@ -9,4 +9,5 @@ class PaymentDatabase(DatabaseCon):
 
 
     def get_amount_owed(self,license_plate):
+        pass
 

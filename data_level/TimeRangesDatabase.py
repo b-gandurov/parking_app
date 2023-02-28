@@ -32,9 +32,21 @@ class TimeRangesDatabase(DatabaseCon):
         time += timedelta(hours=1)
         return time
 
+    def get_ranges(self, license_plate):
+        ranges = {}
+        start, end = self.get_vehicle_start_end_time_in_datetime(license_plate)
+        while start < end:
+            time_frame = self.get_time_frame_from_time(start)
+            if time_frame not in ranges:
+                ranges[time_frame] = 0
+            ranges[time_frame] += 1
+            start += timedelta(hours=1)
+        return ranges
+
+
 
 # time = datetime.strptime('8:00:00', '%H:%M:%S')
-# print(TimeRangesDatabase().get_time_frame_from_time(time))
+# print(TimeRangesDatabase().get_ranges("CA4dwa12HA"))
 
 # def calculate_hours(self, license_plate):
 #     # Get start and end time from vehicles table
