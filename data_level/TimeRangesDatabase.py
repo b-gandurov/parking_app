@@ -21,11 +21,14 @@ class TimeRangesDatabase(DatabaseCon):
         shifts = {row[0]: (datetime.strptime(row[1], '%H:%M:%S').time(), datetime.strptime(row[2], '%H:%M:%S').time())
                   for row in
                   self.cursor.execute("SELECT rate_type, start_time, end_time FROM rate_types").fetchall()}
-
+        shifts_collection = []
         for shift, (start_time, end_time) in shifts.items():
-            if start_time <= time or time < end_time:
-                return shift
-        return None
+            if start_time > end_time:
+                if start_time <= time or time < end_time:
+                    shifts_collection.append(shift)
+            elif start_time <= time < end_time:
+                shifts_collection.append(shift)
+        return shifts_collection
 
     @staticmethod
     def get_next_time(time: datetime):
@@ -36,17 +39,23 @@ class TimeRangesDatabase(DatabaseCon):
         ranges = {}
         start, end = self.get_vehicle_start_end_time_in_datetime(license_plate)
         while start < end:
-            time_frame = self.get_time_frame_from_time(start)
-            if time_frame not in ranges:
-                ranges[time_frame] = 0
-            ranges[time_frame] += 1
+            time_frame_collection = self.get_time_frame_from_time(start)
+            for frame in time_frame_collection:
+                if frame not in ranges:
+                    ranges[frame] = 0
+                ranges[frame] += 1
             start += timedelta(hours=1)
-        return ranges
+        return sum(ranges.values()), ranges
 
 
-
-# time = datetime.strptime('8:00:00', '%H:%M:%S')
-# print(TimeRangesDatabase().get_ranges("CA4dwa12HA"))
+time = datetime.strptime('8:00:00', '%H:%M:%S')
+print(TimeRangesDatabase().get_ranges("CA1263HA"))
+print(TimeRangesDatabase().get_ranges("CA4121HA"))
+print(TimeRangesDatabase().get_ranges("CA41212HA"))
+print(TimeRangesDatabase().get_ranges("CA4dwa12HA"))
+print(TimeRangesDatabase().get_ranges("CA4dwa1wad2HA"))
+print(TimeRangesDatabase().get_ranges("CA4ad2HA"))
+print(TimeRangesDatabase().get_ranges("CA412414ad2HA"))
 
 # def calculate_hours(self, license_plate):
 #     # Get start and end time from vehicles table

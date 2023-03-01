@@ -89,19 +89,18 @@ class TimeService(TimeRangesDatabase):
         return self.get_vehicle_start_end_time_in_datetime(license_plate)
 
 
-
 class DiscountService:
     """This class will be responsible for managing discounts for parking"""
 
 
 class PaymentService:
     """This class will be responsible for calculating the amount owed for parking."""
+
     def __init__(self):
         pass
 
-    def get_amount_owed(self,license_plate):
+    def get_amount_owed(self, license_plate):
         pass
-
 
 
 class ExceptionHandling:
@@ -109,19 +108,32 @@ class ExceptionHandling:
     and unexpected situations that may arise during the course of the application's operation."""
 
 
-# car1 = Vehicle("A", "CA1263HA", "2022-03-01 10:30:00", "Silver")
-# car2 = Vehicle("B", "CA4121HA", "2022-03-02 10:30:00", "Gold")
-# car3 = Vehicle("B", "CA41212HA", "2022-03-02 10:30:00", "Gold")
-# car4 = Vehicle("A", "CA4dwa12HA", "2022-05-02 10:30:00", "Gold")
+car1 = Vehicle("A", "CA1263HA", "2022-03-01 16:30:00", "Silver")
+car2 = Vehicle("B", "CA4121HA", "2022-03-02 10:30:00", "Gold")
+car3 = Vehicle("B", "CA41212HA", "2022-03-02 10:30:00", "Gold")
+car4 = Vehicle("A", "CA4dwa12HA", "2022-05-02 10:30:00", "Gold")
 car5 = Vehicle("A", "CA4dwa1wad2HA", "2022-05-02 10:30:00", "Gold")
+car6 = Vehicle("A", "CA4ad2HA", "2022-05-02 12:30:00", "Gold")
+car7 = Vehicle("A", "CA412414ad2HA", "2022-05-02 12:30:00", "Gold")
+#
+ParkingLotService().add_vehicle(car1)
+ParkingLotService().add_vehicle(car2)
+# # ParkingLotService().ParkingDB.cursor.execute(f'''UPDATE parking_lot_size SET available_area = 1 WHERE id = 1''')
 
-# ParkingLotService().add_vehicle(car1)
-# ParkingLotService().add_vehicle(car2)
-# # # ParkingLotService().ParkingDB.cursor.execute(f'''UPDATE parking_lot_size SET available_area = 1 WHERE id = 1''')
-# ParkingLotService().add_vehicle(car3)
+ParkingLotService().add_vehicle(car3)
+ParkingLotService().add_vehicle(car4)
 ParkingLotService().add_vehicle(car5)
-# ParkingLotService().remove_vehicle("CA1263HA","2022-03-02 00:30:00")
-# ParkingLotService().remove_vehicle("CA4121HA","2022-03-03 23:30:00")
+ParkingLotService().add_vehicle(car6)
+ParkingLotService().add_vehicle(car7)
+ParkingLotService().remove_vehicle("CA1263HA","2022-03-02 00:30:00")
+ParkingLotService().remove_vehicle("CA4121HA","2022-03-03 23:30:00")
+ParkingLotService().remove_vehicle("CA4ad2HA","2022-05-03 1:30:00")
+ParkingLotService().remove_vehicle("CA41212HA","2022-03-05 00:30:00")
+ParkingLotService().remove_vehicle("CA4dwa12HA","2022-05-03 22:32:00")
+ParkingLotService().remove_vehicle("CA4dwa1wad2HA","2022-05-02 10:34:00")
+ParkingLotService().remove_vehicle("CA412414ad2HA","2022-12-12 22:30:00")
+
+
 
 
 # print(TimeService().get_vehicle_time("CA1263HA"))

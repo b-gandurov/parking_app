@@ -15,6 +15,8 @@ if __name__ == "__main__":
     membership_cards = {"Silver": .1, "Gold": .15, "Platinum": 0.2}
     vehicle_types = {"A": 1, "B": 2, "C": 4}
     rate_types = {"night_hours": ["18:00:00", "08:00:00"], "day_hours": ["08:00:00", "18:00:00"]}
+    # rate_types = {"night_hours": ["18:00:00", "08:00:00"], "day_hours": ["08:00:00", "18:00:00"],
+                  # "mid_hours": ["14:00:00", "22:00:00"]}
     rates = {"night_hours": {"A": 2, "B": 4, "C": 8}, "day_hours": {"A": 3, "B": 6, "C": 12}}
     parkinglot_size = 20
 
