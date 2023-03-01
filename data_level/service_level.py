@@ -29,14 +29,6 @@ class Vehicle:
         else:
             self.__vehicle_type = value
 
-    def amount_owed(self):
-        """This method will calculate the owed amount for the vehicle"""
-        pass
-
-    def exit_time(self):
-        """This method will update the exit time once the car exits"""
-        return self.TimeDB.get_exited_at(self.plate_number)
-
 
 class ParkingLotService(ParkinglotDatabase):
     """This class will be responsible for managing the parking lot and its associated data.
