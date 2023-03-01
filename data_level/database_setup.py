@@ -1,5 +1,6 @@
 import sqlite3
 from abc import ABC
+
 database = "parking_app.db"
 conn = sqlite3.connect(database)
 
@@ -11,12 +12,22 @@ class DatabaseCon(ABC):
         self.db = self.DB
         self.cursor = self.db.cursor()
 
+    def get_item(self, return_from_col, table, column_to_match, item_to_match):
+        try:
+            result = self.cursor.execute(f'''SELECT {return_from_col} FROM {table} WHERE {column_to_match} = ?''',
+                                       (item_to_match,)).fetchone()[0]
+        except TypeError:
+            raise Exception(f"No result for '{item_to_match}' item in '{column_to_match}' column for '{table}' table.")
+        return result
+
+
+
 if __name__ == "__main__":
     membership_cards = {"Silver": .1, "Gold": .15, "Platinum": 0.2}
     vehicle_types = {"A": 1, "B": 2, "C": 4}
     rate_types = {"night_hours": ["18:00:00", "08:00:00"], "day_hours": ["08:00:00", "18:00:00"]}
     # rate_types = {"night_hours": ["18:00:00", "08:00:00"], "day_hours": ["08:00:00", "18:00:00"],
-                  # "mid_hours": ["14:00:00", "22:00:00"]}
+    # "mid_hours": ["14:00:00", "22:00:00"]}
     rates = {"night_hours": {"A": 2, "B": 4, "C": 8}, "day_hours": {"A": 3, "B": 6, "C": 12}}
     parkinglot_size = 20
 
@@ -33,7 +44,6 @@ if __name__ == "__main__":
                 available_area INTEGER NOT NULL CHECK (available_area >= 0)
             )
         '''
-
 
         create_table_vehicles_types = '''
         CREATE TABLE IF NOT EXISTS vehicles_types(
